@@ -21,6 +21,7 @@ class User(UserMixin, db.Model):
     login = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     user_age = db.Column(db.Integer, nullable=False)
+    user_email = db.Column(db.String, nullable=False)
 
 
 @login_manager.user_loader
