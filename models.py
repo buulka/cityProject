@@ -13,8 +13,8 @@ class Company(UserMixin, db.Model):
 
 
 @login_manager.user_loader
-def load_company(company_id):
-    return Company.query.get(company_id)
+def load_user(u_id):
+    return Company.query.get(u_id)
 
 
 class User(UserMixin, db.Model):
@@ -32,7 +32,7 @@ def load_user(user_id):
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    event_name = db.Column(db.Integer, nullable=False, unique=True)
+    event_name = db.Column(db.String, nullable=False, unique=True)
     event_date = db.Column(db.String, nullable=False)
     event_address = db.Column(db.String, nullable=False)
     info = db.Column(db.String, nullable=False)

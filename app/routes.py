@@ -1,6 +1,6 @@
 from flask_login import login_user, login_required, logout_user, current_user
 from app import app, db
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash, url_for, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import re
 from models import User, Company, Event, Order
@@ -42,24 +42,6 @@ def user_auth():
     return render_template('user_auth.html')
 
 
-@app.route('/user_login', methods=['GET', 'POST'])
-def user_login():
-    login = request.form.get('login')
-    password = request.form.get('password')
-
-    if login and password:
-        user = User.query.filter_by(login=login).first()
-        if user and check_password_hash(user.password, password):
-            login_user(user)
-            return redirect(url_for('index'))
-        else:
-            flash('Логин или пароль некорректны')
-    else:
-        flash('Пожалуйста, заполните поля "Логин" и "Пароль"')
-
-    return render_template('user_login.html')
-
-
 @app.route('/company_auth', methods=['GET', 'POST'])
 def company_auth():
     company_name = request.form.get('company_name')
@@ -90,6 +72,24 @@ def company_auth():
     return render_template('company_auth.html')
 
 
+@app.route('/user_login', methods=['GET', 'POST'])
+def user_login():
+    login = request.form.get('login')
+    password = request.form.get('password')
+
+    if login and password:
+        user = User.query.filter_by(login=login).first()
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for('index'))
+        else:
+            flash('Логин или пароль некорректны')
+    else:
+        flash('Пожалуйста, заполните поля "Логин" и "Пароль"')
+
+    return render_template('user_login.html')
+
+
 @app.route('/company_login', methods=['GET', 'POST'])
 def company_login():
     comp_login = request.form.get('comp_login')
@@ -97,6 +97,7 @@ def company_login():
 
     if comp_login and comp_password:
         company = Company.query.filter_by(company_name=comp_login).first()
+        session['id'] = company.id
         if company and check_password_hash(company.company_password, comp_password):
             login_user(company)
             return redirect(url_for('company_profile'))
@@ -108,6 +109,46 @@ def company_login():
     return render_template('company_login.html')
 
 
+@app.route('/add_event', methods=['GET', 'POST'])
+def add_event():
+    event_name = request.form.get('event_name')
+    event_date = request.form.get('event_date')
+    event_address = request.form.get('event_address')
+    capacity = request.form.get('capacity')
+    tag = request.form.get('tag')
+    age = request.form.get('age')
+    info = request.form.get('info')
+
+    if request.method == 'POST':
+        if not (event_name or event_date or event_address or tag or capacity or age or info):
+            flash('Пожалуйста заполните все поля!')
+        else:
+            new_event = Event(event_name=event_name, event_date=event_date, event_address=event_address, info=info, tag=tag, capacity=capacity, vacancy=capacity, age=int(age), company_id=session['id'])
+            db.session.add(new_event)
+            db.session.commit()
+            # return redirect(url_for('company_profile'))
+            company_events = Event.query.filter_by(company_id=session['id']).all()
+            company = Company.query.filter_by(id=session['id']).first()
+            return render_template('company_profile.html', user=session['id'], data=company_events, company_name=company.company_name)
+
+    return render_template('add_event.html')
+
+
 @app.route('/company_profile', methods=['GET', 'POST'])
 def company_profile():
-    return render_template('company_profile.html')
+    company_events = Event.query.filter_by(company_id=session['id']).all()
+    company = Company.query.filter_by(id=session['id']).first()
+    return render_template('company_profile.html', data=company_events, user=session['id'], company_name=company.company_name)
+
+
+@app.route('/delete_event/<event_id>')
+def event_id(event_id):
+    Event.query.filter_by(id=event_id).delete()
+    db.session.commit()
+    return redirect(url_for('company_profile'))
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    logout_user()
+    return redirect(url_for('index'))

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<style>
+		::-webkit-input-placeholder {
+			text-align:center;
+		}
+		#f{
+			width: 450px;
+		}
+	</style>
+</head>
+
+<body> <!--style="background-color: #379683">-->
+
+	<nav class="navbar bg-dark navbar-dark navbar-expand-sm">
+
+	  <a class="navbar-brand" href="javascript:void(0)">
+		<img src="static/images/logo2.png" alt="logobird" style="width:40px;margin-top:-5px">
+	  </a>
+
+	  <!-- Links -->
+	  <ul class="nav navbar-nav" style="visibility: visible;">
+
+		<li class="nav-item">
+		  <a class="nav-link active" href="/main">GidToGO</a>
+		</li>
+
+		<li class="nav-item">
+		  <a class="nav-link" href="/main">Главная</a>
+		</li>
+
+		<li class="nav-item">
+		  <a class="nav-link active" href="/add_event">Добавление</a>
+		</li>
+
+		<li class="nav-item">
+		  <a class="nav-link" href="/company_profile">Назад</a>
+		</li>
+	  </ul>
+
+	</nav>
+    <br>
+<div  style="text-align:center; border-radius: 10px;background-color:#b6b6b6; width:500px; height: auto;" class="container-fluid  bg-dark">
+        <br>
+        <h2 style="color:white;"> Создание </h2>
+      <div style="width:450px; height: auto; margin-left: auto; margin-right: auto;">
+      <form method='POST'>
+          <div class="form-group">
+            <input type="text" class="form-control" name="event_name" id="event_name" placeholder="Название">
+          </div>
+        <div class="form-group">
+    <input type="text" class="form-control" name="event_date" id="event_date" placeholder="Дата">
+        </div>
+        <div class="form-group">
+    <input type="text" class="form-control" name="event_address" id="event_address" placeholder="Адрес">
+        </div>
+  <div class="form-group">
+    <input type="text" class="form-control" name="capacity" id="capacity" placeholder="Количество мест">
+  </div>
+  <div class="form-group" style="width:223px; float:right;">
+    <input type="text" class="form-control" name="tag" id="tag" placeholder="Тег">
+  </div>
+  <div class="form-group" style="width:223px;">
+
+    <select class="form-control" name="age" id="age">
+      <option>0</option>
+      <option>12</option>
+      <option>16</option>
+      <option>18</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <textarea class="form-control" name="info" id="info" rows="3" placeholder="Описание"></textarea>
+  </div>
+
+          <div class="form-group">
+                            <button type="submit" class="btn btn-primary" value="Register">
+                                Добавить
+                            </button>
+          </div>
+</form>
+</div>
+
+<br><br>
+   </div>
+
+</body>
+</html>

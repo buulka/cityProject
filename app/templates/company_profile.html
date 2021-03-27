@@ -20,7 +20,7 @@
 
 	<nav class="navbar bg-dark navbar-dark navbar-expand-sm">
 
-	  <a class="navbar-brand" href="javascript:void(0)">
+	  <a class="navbar-brand" href="/main">
 		<img src="static/images/logo2.png" alt="logobird" style="width:40px;margin-top:-5px">
 	  </a>
 
@@ -28,19 +28,19 @@
 	  <ul class="nav navbar-nav" style="visibility: visible;">
 
 		<li class="nav-item">
-		  <a class="nav-link active" href="javascript:void(0)">GidToGO</a>
+		  <a class="nav-link active" href="/main">GidToGO</a>
 		</li>
 
 		<li class="nav-item">
-		  <a class="nav-link" href="javascript:void(0)">Главная</a>
+		  <a class="nav-link" href="/main">Главная</a>
 		</li>
 
 		<li class="nav-item">
-		  <a class="nav-link active" href="javascript:void(0)">Личный кабинет</a>
+		  <a class="nav-link active" href="/company_profile">Личный кабинет</a>
 		</li>
 
 		<li class="nav-item">
-		  <a class="nav-link" href="javascript:void(0)">Выйти</a>
+		  <a class="nav-link" href="/logout">Выйти</a>
 		</li>
 	  </ul>
 
@@ -48,7 +48,7 @@
     <br>
    <div style="border-radius: 10px;background-color:#b6b6b6; width: 1000px; height: auto;" class="container-fluid">
         <br>
-        <h2> Назавание биз </h2>
+        <h2> {{ company_name }} </h2>
         <table class="table">
   <thead>
     <tr>
@@ -61,34 +61,29 @@
     </tr>
   </thead>
   <tbody>
+  {% for event in data %}
     <tr>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td><button type="button" class="btn btn-danger">Удалить</button></td>
+      <td>{{ event.event_name }}</td>
+      <td>{{ event.capacity }}</td>
+      <td>{{ event.vacancy }}</td>
+      <td>{{ event.event_date }}</td>
+      <td>{{ event.event_address }}</td>
+      <td>
+          <form action="/delete_event/{{ event.id }}">
+              <button type="submit" class="btn btn-danger">
+                  Удалить
+              </button>
+          </form>
+      </td>
     </tr>
-    <tr>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td><button type="button" class="btn btn-danger">Удалить</button></td>
-    </tr>
-    <tr>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td><button type="button" class="btn btn-danger">Удалить</button></td>
-    </tr>
+  {% endfor %}
   </tbody>
 </table>
-
-<button type="button" class="btn btn-primary">Добавить</button>
+       <form action="/add_event">
+					<button type="submit" class="btn btn-primary">
+						Добавить
+					</button>
+       </form>
 <br><br>
    </div>
 
