@@ -1,23 +1,7 @@
+from app import login_manager, db
+import config
 
 from flask_login import UserMixin
-from flask import Flask
-from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-
-app.debug = True
-
-app.config['SECRET_KEY'] = 'super secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///city4.db'
-app.config['SQLALCHEMY_TRASK_MODIFICATIONS'] = False
-
-login_manager = LoginManager(app)
-
-db = SQLAlchemy(app)
-
-from app import routes
-
 
 class Company(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,7 +9,7 @@ class Company(UserMixin, db.Model):
     company_password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
 
-    events = db.relationship('Event', backref='сompany', lazy='dynamic')
+    events = db.Column(db.Integer, nullable=False)
 
 
 @login_manager.user_loader
@@ -56,7 +40,7 @@ class Event(db.Model):
     vacancy = db.Column(db.Integer, nullable=False)
     age = db.Column(db.Integer, nullable=False)
 
-    company_id = db.Column(db.Integer, db.ForeignKey('соmpany.id'))
+    company_id = db.Column(db.Integer, nullable=False)
 
 
 class Order(db.Model):

@@ -1,17 +1,17 @@
-# from flask import Flask
-# from flask_login import LoginManager
-# from flask_sqlalchemy import SQLAlchemy
-#
-# app = Flask(__name__)
-#
-# app.debug = True
-#
-# app.config['SECRET_KEY'] = 'super secret key'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///city_table.db'
-# app.config['SQLALCHEMY_TRASK_MODIFICATIONS'] = False
-#
-# login_manager = LoginManager(app)
-#
-# db = SQLAlchemy(app)
-#
-# from app import routes
+from flask import Flask
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+
+app.debug = True
+
+app.config['SECRET_KEY'] = 'super secret key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///city_table.db'
+app.config['SQLALCHEMY_TRASK_MODIFICATIONS'] = False
+
+login_manager = LoginManager(app)
+
+db = SQLAlchemy(app)
+
+from app import routes
