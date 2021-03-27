@@ -3,6 +3,7 @@ import config
 
 from flask_login import UserMixin
 
+
 class Company(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     company_name = db.Column(db.String, nullable=False, unique=True)

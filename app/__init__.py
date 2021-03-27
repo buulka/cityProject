@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.debug = True
 
 app.config['SECRET_KEY'] = 'super secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///city_table.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///city4.db'
 app.config['SQLALCHEMY_TRASK_MODIFICATIONS'] = False
 
 login_manager = LoginManager(app)

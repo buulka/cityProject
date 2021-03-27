@@ -3,7 +3,7 @@ from app import app, db
 from flask import render_template, request, redirect, flash, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from models import User, Company, Event
+from models import User, Company, Event, Order
 
 
 @app.route('/')
