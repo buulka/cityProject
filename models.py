@@ -19,7 +19,7 @@ def load_user(u_id):
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    login = db.Column(db.String, nullable=False, unique=True)
+    login = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     user_age = db.Column(db.Integer, nullable=False)
     user_email = db.Column(db.String, nullable=False)
@@ -32,7 +32,7 @@ def load_user(user_id):
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    event_name = db.Column(db.String, nullable=False, unique=True)
+    event_name = db.Column(db.String, nullable=False)
     event_date = db.Column(db.String, nullable=False)
     event_address = db.Column(db.String, nullable=False)
     info = db.Column(db.String, nullable=False)

@@ -8,7 +8,7 @@ app.secret_key = 'hello'
 app.debug = True
 
 app.config['SECRET_KEY'] = 'hello'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///city8.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///city10.db'
 app.config['SQLALCHEMY_TRASK_MODIFICATIONS'] = False
 
 login_manager = LoginManager(app)
