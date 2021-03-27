@@ -9,6 +9,7 @@ class Company(UserMixin, db.Model):
     company_name = db.Column(db.String, nullable=False, unique=True)
     company_password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
+    description = db.Column(db.String(255), nullable=False)
 
 
 @login_manager.user_loader

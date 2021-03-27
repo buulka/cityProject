@@ -1,49 +1,83 @@
-{% extends 'base.html' %}
 
-{% block title %}
-    <title>Вход</title>
-{% endblock %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<style>
+		::-webkit-input-placeholder {
+			text-align:center;
+		}
+		#f{
+			width: 450px;
+		}
+	</style>
+</head>
 
-{% block body %}
+<body> <!--style="background-color: #379683">-->
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class=flashes>
+	<nav class="navbar bg-dark navbar-dark navbar-expand-sm">
+
+	  <a class="navbar-brand" href="/index">
+		<img src="static/images/logo2.png" alt="logobird" style="width:40px;margin-top:-5px">
+	  </a>
+
+	  <!-- Links -->
+	  <ul class="nav navbar-nav" style="visibility: visible;">
+
+		<li class="nav-item">
+		  <a class="nav-link active" href="/index">GidToGO</a>
+		</li>
+
+		<li class="nav-item">
+		  <a class="nav-link" href="/index">Главная</a>
+		</li>
+
+		<li class="nav-item">
+		  <a class="nav-link" href="/company_login">Я - организация</a>
+		</li>
+
+		<li class="nav-item">
+		  <a class="nav-link active" href="/user_login">Я - пользователь</a>
+		</li>
+	  </ul>
+
+	</nav>
+
+  <div class="container-fluid">
+    <div class="raw bg-dark" style="width: 450px; height: 355px;margin-top: 10%; margin-left: auto; margin-right: auto; text-align: center; border-radius: 10px;">
+        <div style="color:white;">
+				 {% with messages = get_flashed_messages() %}
+        		{% if messages %}
+            		<ul class=flashes>
                 {% for message in messages %}
                     <li>
                         {{ message }}
                     </li>
                 {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-
-<div class="container-fluid">
-    <div class="raw">
-        <div class="col-md-4">
-            <h2>
-				Вход
-			</h2>
-                    <form method="POST">
+            		</ul>
+        		{% endif %}
+    		{% endwith %}
+		</div>
+		<div class="col-sm-12" style="width: 450px;">
+          <div style="height:54px; width:450px"></div>
+            <h2 style="color:white">
+				          Вход
+			      </h2>
+            <form method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="login" id="login" placeholder="Введите логин"/>
+                    </div>
                         <div class="form-group">
-
-                            <label>
-                                Логин
-                            </label>
-                            <input type="text" class="form-control" name="login" id="title" placeholder="Введите логин"/>
-                        </div>
-                        <div class="form-group">
-
-                            <label>
-                                Пароль
-                            </label>
                             <input type="password" class="form-control" name="password" id="password" placeholder="Введите пароль"/>
                         </div>
-
-                            <button type="submit" class="btn btn-success" value="Login">
+                            <button type="submit" class="btn" value="Login" style="background-color: #b6b6b6 ">
                                 Вход
-                            </button>
-                            <a href="{{ url_for('user_auth') }}">Регистрация</a>
+                            </button><br>
+                            <a style="color:white" href="{{ url_for('user_auth') }}">Регистрация</a>
 
                     </form>
         </div>
@@ -53,4 +87,5 @@
     </div>
 </div>
 
-{% endblock %}
+</body>
+</html>

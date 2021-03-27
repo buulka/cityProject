@@ -66,12 +66,13 @@ def company_auth():
     company_password = request.form.get('company_password')
     company_password2 = request.form.get('company_password2')
     email = request.form.get('email')
+    description = request.form.get('description')
 
     pattern = r"^[a-zA-Z0-9]{1,100}[@][a-z]{2,6}\.[a-z]{2,4}"
     email_re = re.compile(pattern)
 
     if request.method == 'POST':
-        if not (company_name or company_password or company_password2 or email):
+        if not (company_name or company_password or company_password2 or email or description):
             flash('Пожалуйста заполните все поля!')
         elif company_password != company_password2:
             flash('Пароли не совпадают!')
@@ -79,7 +80,7 @@ def company_auth():
             flash('Неверный формат Email')
         else:
             company_hash_pwd = generate_password_hash(company_password)
-            new_company = Company(company_name=company_name, company_password=company_hash_pwd, email=email)
+            new_company = Company(company_name=company_name, company_password=company_hash_pwd, email=email, description=description)
 
             db.session.add(new_company)
             db.session.commit()
@@ -98,10 +99,15 @@ def company_login():
         company = Company.query.filter_by(company_name=comp_login).first()
         if company and check_password_hash(company.company_password, comp_password):
             login_user(company)
-            return redirect(url_for('index'))
+            return redirect(url_for('company_profile'))
         else:
             flash('Логин или пароль некорректны')
     else:
         flash('Пожалуйста, заполните поля "Логин" и "Пароль"')
 
     return render_template('company_login.html')
+
+
+@app.route('/company_profile', methods=['GET', 'POST'])
+def company_profile():
+    return render_template('company_profile.html')
