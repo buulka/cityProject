@@ -37,7 +37,7 @@ def user_auth():
             db.session.add(new_user)
             db.session.commit()
 
-            return redirect(url_for('index'))
+            return redirect(url_for('user_login'))
 
     return render_template('user_auth.html')
 
@@ -84,7 +84,7 @@ def company_auth():
             db.session.add(new_company)
             db.session.commit()
 
-            return redirect(url_for('index'))
+            return redirect(url_for('company_login'))
 
     return render_template('company_auth.html')
 
