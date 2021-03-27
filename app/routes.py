@@ -35,3 +35,20 @@ def user_auth():
 
     return render_template('user_auth.html')
 
+
+@app.route('/user_login', methods=['GET', 'POST'])
+def login_page():
+    login = request.form.get('login')
+    password = request.form.get('password')
+
+    if login and password:
+        user = User.query.filter_by(login=login).first()
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for('index'))
+        else:
+            flash('Логин или пароль некорректны')
+    else:
+        flash('Пожалуйста, заполните поля "Логин" и "Пароль"')
+
+    return render_template('user_login.html')
