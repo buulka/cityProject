@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Вход для компании</title>
+{% endblock %}
+
+{% block body %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <li>
+                        {{ message }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+<div class="container-fluid">
+    <div class="raw">
+        <div class="col-md-4">
+            <h2>
+				Вход
+			</h2>
+                    <form method="POST">
+                        <div class="form-group">
+
+                            <label>
+                                Название
+                            </label>
+                            <input type="text" class="form-control" name="comp_login" id="comp_login" placeholder="Введите логин"/>
+                        </div>
+                        <div class="form-group">
+
+                            <label>
+                                Пароль
+                            </label>
+                            <input type="password" class="form-control" name="comp_password" id="comp_password" placeholder="Введите пароль"/>
+                        </div>
+
+                            <button type="submit" class="btn btn-success" value="Login">
+                                Вход
+                            </button>
+                            <a href="{{ url_for('company_auth') }}">Регистрация</a>
+
+                    </form>
+        </div>
+        <div class="col-md-8">
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

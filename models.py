@@ -10,8 +10,6 @@ class Company(UserMixin, db.Model):
     company_password = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
 
-    events = db.Column(db.Integer, nullable=False)
-
 
 @login_manager.user_loader
 def load_company(company_id):

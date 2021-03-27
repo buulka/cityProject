@@ -37,7 +37,7 @@ def user_auth():
 
 
 @app.route('/user_login', methods=['GET', 'POST'])
-def login_page():
+def user_login():
     login = request.form.get('login')
     password = request.form.get('password')
 
@@ -52,3 +52,45 @@ def login_page():
         flash('Пожалуйста, заполните поля "Логин" и "Пароль"')
 
     return render_template('user_login.html')
+
+
+@app.route('/company_auth', methods=['GET', 'POST'])
+def company_auth():
+    company_name = request.form.get('company_name')
+    company_password = request.form.get('company_password')
+    company_password2 = request.form.get('company_password2')
+    email = request.form.get('email')
+
+    if request.method == 'POST':
+        if not (company_name or company_password or company_password2 or email):
+            flash('Пожалуйста заполните все поля!')
+        elif company_password != company_password2:
+            flash('Пароли не совпадают!')
+        else:
+            company_hash_pwd = generate_password_hash(company_password)
+            new_company = Company(company_name=company_name, company_password=company_hash_pwd, email=email)
+
+            db.session.add(new_company)
+            db.session.commit()
+
+            return redirect(url_for('index'))
+
+    return render_template('company_auth.html')
+
+
+@app.route('/company_login', methods=['GET', 'POST'])
+def company_login():
+    comp_login = request.form.get('comp_login')
+    comp_password = request.form.get('comp_password')
+
+    if comp_login and comp_password:
+        company = Company.query.filter_by(company_name=comp_login).first()
+        if company and check_password_hash(company.company_password, comp_password):
+            login_user(company)
+            return redirect(url_for('index'))
+        else:
+            flash('Логин или пароль некорректны')
+    else:
+        flash('Пожалуйста, заполните поля "Логин" и "Пароль"')
+
+    return render_template('company_login.html')
