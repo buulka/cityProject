@@ -32,59 +32,57 @@
 		</li>
 
 		<li class="nav-item">
-		  <a class="nav-link active" href="/company_profile">Личный кабинет</a>
+		  <a class="nav-link" href="/user_profile">События</a>
 		</li>
 
 		<li class="nav-item">
+		  <a class="nav-link active" href="/user_events">Мои записи</a>
+		</li>
+    <li class="nav-item">
 		  <a class="nav-link" href="/logout">Выйти</a>
 		</li>
 	  </ul>
 
 	</nav>
-    <br>
+
+   <br>
    <div style="border-radius: 10px;background-color:#b6b6b6; width: 1000px; height: auto;" class="container-fluid">
         <br>
-        <h2> {{ company_name }} </h2>
+        <h2> Мои записи </h2>
         <table class="table">
   <thead>
     <tr>
       <th scope="col">Название</th>
-        <th scope="col">Тэг</th>
-      <th scope="col">Всего мест</th>
       <th scope="col">Свободно</th>
       <th scope="col">Дата</th>
-        <th scope="col">Возраст</th>
       <th scope="col">Адрес</th>
-      <th scope="col">Удалить</th>
+        <th scope="col">Обратная связь</th>
+      <th scope="col">Отменить запись</th>
     </tr>
   </thead>
   <tbody>
-  {% for event in data %}
+  {% for i in data %}
     <tr>
-      <td>{{ event.event_name }}</td>
-       <td>{{ event.tag}}</td>
-      <td>{{ event.capacity }}</td>
-      <td>{{ event.vacancy }}</td>
-      <td>{{ event.event_date }}</td>
-        <td>{{ event.age }}</td>
-      <td>{{ event.event_address }}</td>
+      <td>{{ i.event_name }}</td>
+      <td>{{ i.vacancy }}</td>
+      <td>{{ i.event_date }}</td>
+      <td>{{ i.event_address }}</td>
+        <td>{{ i.event_email}}</td>
       <td>
-          <form action="/delete_event/{{ event.id }}">
-              <button type="submit" class="btn btn-danger">
-                  Удалить
-              </button>
+          <form action="/unsubscribe/{{ i.id }}">
+              <button type="submit" class="btn btn-danger">Отменить</button>
           </form>
-      </td>
+        </td>
     </tr>
   {% endfor %}
+
+
   </tbody>
 </table>
-       <form action="/add_event">
-					<button type="submit" class="btn btn-primary">
-						Добавить
-					</button>
-       </form>
-<br><br>
+
+
+<br>
+
    </div>
 
 

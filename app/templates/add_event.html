@@ -20,7 +20,7 @@
 
 	<nav class="navbar bg-dark navbar-dark navbar-expand-sm">
 
-	  <a class="navbar-brand" href="javascript:void(0)">
+	  <a class="navbar-brand" href="#">
 		<img src="static/images/logo2.png" alt="logobird" style="width:40px;margin-top:-5px">
 	  </a>
 
@@ -28,11 +28,7 @@
 	  <ul class="nav navbar-nav" style="visibility: visible;">
 
 		<li class="nav-item">
-		  <a class="nav-link active" href="/main">GidToGO</a>
-		</li>
-
-		<li class="nav-item">
-		  <a class="nav-link" href="/main">Главная</a>
+		  <a class="nav-link active" href="#">GidToGO</a>
 		</li>
 
 		<li class="nav-item">
@@ -64,7 +60,14 @@
     <input type="text" class="form-control" name="capacity" id="capacity" placeholder="Количество мест">
   </div>
   <div class="form-group" style="width:223px; float:right;">
-    <input type="text" class="form-control" name="tag" id="tag" placeholder="Тег">
+          <select class="form-control" name="tag" id="tag">
+      <option>Развлечения</option>
+      <option>Семья</option>
+      <option>Друзья</option>
+      <option>Работа</option>
+              <option>Еда</option>
+              <option>Общение</option>
+    </select>
   </div>
   <div class="form-group" style="width:223px;">
 

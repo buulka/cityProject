@@ -81,7 +81,7 @@ def user_login():
         user = User.query.filter_by(login=login).first()
         if user and check_password_hash(user.password, password):
             login_user(user)
-            return redirect(url_for('index'))
+            return redirect(url_for('user_profile'))
         else:
             flash('Логин или пароль некорректны')
     else:
@@ -97,8 +97,8 @@ def company_login():
 
     if comp_login and comp_password:
         company = Company.query.filter_by(company_name=comp_login).first()
-        session['id'] = company.id
         if company and check_password_hash(company.company_password, comp_password):
+            session['id'] = company.id
             login_user(company)
             return redirect(url_for('company_profile'))
         else:
@@ -119,11 +119,13 @@ def add_event():
     age = request.form.get('age')
     info = request.form.get('info')
 
+    company_event = Company.query.filter_by(id=session['id']).first()
+    email_event = company_event.email
     if request.method == 'POST':
         if not (event_name or event_date or event_address or tag or capacity or age or info):
             flash('Пожалуйста заполните все поля!')
         else:
-            new_event = Event(event_name=event_name, event_date=event_date, event_address=event_address, info=info, tag=tag, capacity=capacity, vacancy=capacity, age=int(age), company_id=session['id'])
+            new_event = Event(event_name=event_name, event_date=event_date, event_address=event_address, info=info, tag=tag, capacity=capacity, vacancy=capacity, age=int(age), event_email=email_event, company_id=session['id'])
             db.session.add(new_event)
             db.session.commit()
             # return redirect(url_for('company_profile'))
@@ -144,8 +146,57 @@ def company_profile():
 @app.route('/delete_event/<event_id>')
 def event_id(event_id):
     Event.query.filter_by(id=event_id).delete()
+    Order.query.filter_by(event_id=event_id).delete()
     db.session.commit()
     return redirect(url_for('company_profile'))
+
+
+@app.route('/user_profile', methods=['GET', 'POST'])
+def user_profile():
+    return render_template('user_profile.html')
+
+
+@app.route('/show/<tag>',  methods=['GET', 'POST'])
+def show(tag):
+    b = []
+    tag_event = Event.query.filter_by(tag=tag).all()
+    for i in tag_event:
+        if current_user.user_age >= i.age:
+            b.append(i)
+    return render_template('user_profile.html', data=b)
+
+
+@app.route('/enroll/<event_idd>', methods=['GET', 'POST'])
+def enroll(event_idd):
+    new_order = Order(event_id=event_idd, user_id=current_user.id)
+    db.session.add(new_order)
+
+    # count = Event.query.filter_by(id=event_idd).first()
+    # vac_new = Event.query.filter_by(id=event_idd).update({'vacancy': count.vacancy - 1})
+    db.session.commit()
+
+    return redirect(url_for('user_profile'))
+
+
+@app.route('/user_events', methods=['GET', 'POST'])
+def user_events():
+    a = []
+    user_events = Order.query.filter_by(user_id=current_user.id).all()
+    for i in user_events:
+        event = Event.query.filter_by(id=i.event_id).first()
+        a.append(event)
+
+    return render_template('user_events.html', data=a)
+
+
+@app.route('/unsubscribe/<event_id>', methods=['GET', 'POST'])
+def unsubscribe(event_id):
+    del_event = Order.query.filter_by(event_id=event_id).delete()
+    count = Event.query.filter_by(id=event_id).first().vacancy
+    vac_new = Event.query.filter_by(id=event_id).update({'vacancy': count + 1})
+    db.session.commit()
+
+    return redirect(url_for('user_events'))
 
 
 @app.route('/logout', methods=['GET', 'POST'])

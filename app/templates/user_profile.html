@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<style>
+		::-webkit-input-placeholder {
+			text-align:center;
+		}
+		#f{
+			width: 450px;
+		}
+	</style>
+</head>
+
+<body style="text-align:center;"> <!--style="background-color: #379683">-->
+
+	<nav class="navbar bg-dark navbar-dark navbar-expand-sm">
+
+	  <a class="navbar-brand" href="#">
+		<img src="{{ url_for('static', filename='/images/logo2.png') }}" alt="logobird" style="width:40px;margin-top:-5px">
+	  </a>
+
+	  <!-- Links -->
+	  <ul class="nav navbar-nav" style="visibility: visible;">
+
+		<li class="nav-item">
+		  <a class="nav-link active" href="#">GidToGO</a>
+		</li>
+
+		<li class="nav-item">
+		  <a class="nav-link active" href="/user_profile">События</a>
+		</li>
+
+		<li class="nav-item">
+		  <a class="nav-link" href="/user_events">Мои записи</a>
+		</li>
+    <li class="nav-item">
+		  <a class="nav-link" href="/logout">Выйти</a>
+		</li>
+	  </ul>
+
+	</nav>
+     <br>
+     <p style="margin-left:auto; margin-right:auto;">Выберите нужный вам тег<p>
+ <div style="align-items:center; border-radius: 10px;background-color:#b6b6b6; width: 1000px; height: auto;" class="container-fluid">
+   <br>
+   <div class="row">
+     <div class="col-sm-2" style="width:120px;">
+       <form style="width:120px;"  action="/show/Развлечения">
+         <button style="width:120px;" type="submit" class="btn btn-info">Развлечения</button>
+       </form>
+       </div>
+
+      <div class="col-sm-2" style="width:120px;">
+       <form style="float:left" action="/show/Семья">
+         <button style="width:120px;" type="submit" class="btn btn-info">Семья</button>
+       </form>
+       </div>
+
+       <div class="col-sm-2" style="width:120px;">
+       <form style="width:120px;" action="/show/Друзья">
+         <button style="width:120px;" type="submit" class="btn btn-info">Друзья</button>
+       </form>
+       </div>
+
+       <div class="col-sm-2" style="width:120px;">
+       <form style="width:120px;" action="/show/Работа">
+            <button style="width:120px;" type="submit" class="btn btn-info">Работа</button>
+       </form>
+       </div>
+
+       <div class="col-sm-2" style="width:120px;">
+       <form style="width:120px;" action="/show/Еда">
+         <button style="width:120px;" type="submit" class="btn btn-info">Еда</button>
+       </form>
+       </div>
+
+        <div class="col-sm-2" style="width:120px;">
+       <form style="width:120px;" action="/show/<Общение>">
+          <button style="width:120px;" type="button" class="btn btn-info">Общение</button>
+       </form>
+       </div>
+
+    </div>
+   <br>
+ </div>
+<br>
+     <br>
+   <div style="border-radius: 10px;background-color:#b6b6b6; width: 1000px; height: auto;" class="container-fluid">
+        <br>
+        <h2> Доступные события </h2>
+       <table class="table">
+        <thead>
+    <tr>
+      <th scope="col">Название</th>
+        <th scope="col">Описание</th>
+      <th scope="col">Свободно</th>
+      <th scope="col">Дата</th>
+      <th scope="col">Адрес</th>
+      <th scope="col">Обратная связь</th>
+      <th scope="col">Записаться</th>
+    </tr>
+        </thead>
+    <tbody>
+  {% for event in data %}
+    <tr>
+      <td>{{ event.event_name }}</td>
+        <td>{{ event.info }}</td>
+      <td>{{ event.vacancy }}</td>
+      <td>{{ event.event_date }}</td>
+        <td>{{ event.event_address }}</td>
+        <td>{{ event.event_email }}</td>
+
+      <td>
+          <form action="/enroll/{{ event.id }}" method="POST">
+              <button type="submit" class="btn btn-success">Записаться</button>
+          </form>
+      </td>>
+    </tr>
+  {% endfor %}
+    </tbody>
+</table>
+
+<br>
+   </div>
+
+
+</body>
+</html>

@@ -3,7 +3,6 @@ import config
 
 from flask_login import UserMixin
 
-
 class Company(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     company_name = db.Column(db.String, nullable=False, unique=True)
@@ -40,6 +39,7 @@ class Event(db.Model):
     capacity = db.Column(db.Integer, nullable=False)
     vacancy = db.Column(db.Integer, nullable=False)
     age = db.Column(db.Integer, nullable=False)
+    event_email = db.Column(db.String)
 
     company_id = db.Column(db.Integer, nullable=False)
 
